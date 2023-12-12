@@ -1,0 +1,13 @@
+spring:
+  profiles:
+    active: ${PROFILE}
+  config:
+    import: configserver:${CONFIGSERVER_URI}${CONFIGSERVER_PORT}
+    name: ${CONFIGSERVER_NAME}
+  application:
+    name: ${APPLICATION_NAME}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
