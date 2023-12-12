@@ -1,0 +1,27 @@
+version: '2.1'
+services:
+  licensing-service:
+    image:
+      licensing-service
+    container_name: licensing-service
+    ports:
+      - "8080:8080"
+    environment:
+      PROFILE: "dev"
+      CONFIGSERVER_URI: "http://localhost:"
+      CONFIGSERVER_PORT: "8071"
+      DATABASESERVER_PORT: "5433"
+      DATABASESERVER_HOST: "jdbc:postgresql://localhost:"
+      DATABASE_NAME: "olegmetelev"
+      DATABASE_USERNAME: "postgres"
+      DATABASE_PASSWORD: "Tilitilitatata12345"
+      ENCRYPT_KEY: "IMSYMMETRIC"
+    networks:
+      backend:
+        aliases:
+          - "licenseservice"
+
+networks:
+  backend:
+    driver:
+      bridge
