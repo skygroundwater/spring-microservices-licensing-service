@@ -14,11 +14,14 @@ public class OrganizationRestTemplateClient {
     private final RestTemplate restTemplate;
 
     public Organization getOrganization(String organizationId) {
+
         ResponseEntity<Organization> restExchange =
                 restTemplate.exchange(
                         "http://organization-service/v1/organization/{organizationId}",
                         HttpMethod.GET,
-                        null, Organization.class, organizationId);
+                        null,
+                        Organization.class,
+                        organizationId);
 
         return restExchange.getBody();
     }
