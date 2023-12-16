@@ -5,6 +5,7 @@ import com.springmicroservices.client.organizationservice.OrganizationFeignClien
 import com.springmicroservices.client.organizationservice.OrganizationRestTemplateClient;
 import com.springmicroservices.model.Organization;
 import com.springmicroservices.service.interfaces.OrganizationService;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,7 @@ public class OrganizationServiceImpl implements OrganizationService {
     private final OrganizationDiscoveryClient organizationDiscoveryClient;
 
     @Override
+    @CircuitBreaker(name = "organizationService")
     public Organization retrieveOrganizationInfo(String organizationId,
                                                  String clientType) {
         return switch (clientType) {

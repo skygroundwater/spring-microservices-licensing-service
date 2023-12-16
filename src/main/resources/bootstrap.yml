@@ -11,3 +11,64 @@ management:
     web:
       exposure:
         include: '*'
+  endpoint:
+    health:
+      show-details: always
+  health:
+    circuitbreakers:
+      enabled: true
+    ratelimiters:
+      enabled: true
+resilience4j:
+  ratelimiter:
+    instances:
+      licenseService:
+        timeout-duration: 1000ms
+        limit-refresh-period: 5000ms
+        limit-for-period: 5
+  retry:
+    instances:
+      retryLicenseService:
+        max-attempts: 5
+        wait-duration: 10000ms
+        retry-exceptions:
+          - java.util.concurrent.TimeoutException
+  bulkhead:
+    instances:
+      bulkheadLicenseService:
+        max-wait-duration: 10ms
+        max-concurrent-calls: 20
+  thread-pool-bulkhead:
+    instances:
+      bulkheadLicenseService:
+        max-thread-pool-size: 1
+        core-thread-pool-size: 1
+        queue-capacity: 1
+        keep-alive-duration: 20ms
+  circuitbreaker:
+    instances:
+      licenseService:
+        register-health-indicator: true
+        minimum-number-of-calls: 5
+        sliding-window-size: 5
+        automatic-transition-from-open-to-half-open-enabled: true
+        wait-duration-in-open-state: 10s
+        exponential-max-wait-duration-in-open-state: 10s
+        permitted-number-of-calls-in-half-open-state: 3
+        failure-rate-threshold: 50
+        record-exceptions:
+          - org.springframework.web.client.HttpServerErrorException
+          - java.io.IOException
+          - java.util.concurrent.TimeoutException
+          - org.springframework.web.client.ResourceAccessException
+
+      organizationService:
+        register-health-indicator: true
+        wait-duration-in-open-state: 20s
+        sliding-window-size: 6
+        exponential-max-wait-duration-in-open-state: 10s
+        failure-rate-threshold: 60
+logging:
+  level:
+    org.springframework.web: WARN
+    com.springmicroservices: DEBUG

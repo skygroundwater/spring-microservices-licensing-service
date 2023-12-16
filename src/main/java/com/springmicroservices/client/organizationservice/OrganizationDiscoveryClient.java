@@ -26,7 +26,7 @@ public class OrganizationDiscoveryClient {
         if (instances.isEmpty()) return null;
 
         String serviceUri = String.format("%s/v1/organization/%s",
-                instances.get(0).getUri().toString(), organizationId);
+                instances.stream().findAny(), organizationId);
 
         ResponseEntity<Organization> restExchange =
                 restTemplate.exchange(

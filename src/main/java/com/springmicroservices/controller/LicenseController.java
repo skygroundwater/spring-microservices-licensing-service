@@ -1,14 +1,14 @@
 package com.springmicroservices.controller;
 
-import java.nio.file.Path;
+import java.util.List;
 import java.util.Locale;
-import java.util.Random;
 
 import com.springmicroservices.model.License;
 import com.springmicroservices.service.interfaces.LicenseService;
+import com.springmicroservices.utils.usercontext.UserContextHolder;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "v1/organization/{organizationId}/license")
 @AllArgsConstructor
 public class LicenseController {
+
+    private final Logger logger = LoggerFactory.getLogger(LicenseController.class);
 
     private LicenseService licenseService;
 
@@ -26,7 +28,14 @@ public class LicenseController {
         return ResponseEntity.ok(licenseService.getLicense(licenseId, organizationId, "", locale));
     }
 
-    @RequestMapping(value = "/{licenseId}/{clientType}", method = RequestMethod.GET)
+    @GetMapping
+    public ResponseEntity<List<License>> getLicensesByOrganizationId(@PathVariable String organizationId) {
+
+        logger.debug("LicenseController Correlation id: {}", UserContextHolder.getContext().getCorrelationId());
+        return ResponseEntity.ok(licenseService.getLicensesByOrganization(organizationId));
+    }
+
+    @GetMapping(value = "/{licenseId}/{clientType}")
     public License getLicensesWithClient(@PathVariable("organizationId") String organizationId,
                                          @PathVariable("licenseId") String licenseId,
                                          @PathVariable("clientType") String clientType,
