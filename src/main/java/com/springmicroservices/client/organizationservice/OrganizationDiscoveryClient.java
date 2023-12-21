@@ -2,6 +2,7 @@ package com.springmicroservices.client.organizationservice;
 
 import com.springmicroservices.model.Organization;
 import lombok.AllArgsConstructor;
+import org.keycloak.adapters.springsecurity.client.KeycloakRestTemplate;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.http.HttpMethod;
@@ -17,15 +18,15 @@ public class OrganizationDiscoveryClient {
 
     private final DiscoveryClient discoveryClient;
 
-    private final RestTemplate restTemplate;
+    private final KeycloakRestTemplate restTemplate;
 
     public Organization getOrganization(String organizationId) {
         List<ServiceInstance> instances = discoveryClient
-                .getInstances("organization-service");
+                .getInstances("spring-cloud-api-gateway");
 
         if (instances.isEmpty()) return null;
 
-        String serviceUri = String.format("%s/v1/organization/%s",
+        String serviceUri = String.format("%s/organization/v1/organization/%s",
                 instances.stream().findAny(), organizationId);
 
         ResponseEntity<Organization> restExchange =

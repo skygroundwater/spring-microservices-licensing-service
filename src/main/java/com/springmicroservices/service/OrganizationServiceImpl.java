@@ -23,20 +23,17 @@ public class OrganizationServiceImpl implements OrganizationService {
     @CircuitBreaker(name = "organizationService")
     public Organization retrieveOrganizationInfo(String organizationId,
                                                  String clientType) {
-        return switch (clientType) {
-            case "feign" -> {
+        switch (clientType) {
+            case "feign":
                 System.out.println("I am using the feign client");
-                yield organizationFeignClient.getOrganization(organizationId);
-            }
-            case "rest" -> {
+                return organizationFeignClient.getOrganization(organizationId);
+            case "rest":
                 System.out.println("I am using the rest client");
-                yield organizationRestTemplateClient.getOrganization(organizationId);
-            }
-            case "discovery" -> {
+                return organizationRestTemplateClient.getOrganization(organizationId);
+            case "discovery":
                 System.out.println("I am using the discovery client");
-                yield organizationDiscoveryClient.getOrganization(organizationId);
-            }
-            default -> organizationRestTemplateClient.getOrganization(organizationId);
-        };
+                return organizationDiscoveryClient.getOrganization(organizationId);
+        }
+        return organizationRestTemplateClient.getOrganization(organizationId);
     }
 }

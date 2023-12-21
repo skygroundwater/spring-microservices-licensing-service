@@ -4,7 +4,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.http.HttpStatus;
 
-import java.io.Serial;
 import java.util.ArrayList;
 
 import static java.util.Arrays.asList;
@@ -13,7 +12,7 @@ import static java.util.Arrays.asList;
 @Data
 public class RestErrorList extends ArrayList<ErrorMessage> {
 
-    @Serial
+
     private static final long serialVersionUID = -721424777198115589L;
     private HttpStatus status;
 
