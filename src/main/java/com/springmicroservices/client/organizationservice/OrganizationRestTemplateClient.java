@@ -21,7 +21,7 @@ public class OrganizationRestTemplateClient {
                         null,
                         Organization.class,
                         organizationId);
-        restExchange.getHeaders().get("Authorization");
+        System.out.println(restExchange.getHeaders().get("Authorization"));
 
         return restExchange.getBody();
     }
