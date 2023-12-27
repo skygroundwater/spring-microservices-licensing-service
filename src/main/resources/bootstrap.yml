@@ -6,6 +6,7 @@ spring:
     name: ${CONFIGSERVER_NAME}
   application:
     name: ${APPLICATION_NAME}
+
 management:
   endpoints:
     web:
@@ -61,7 +62,6 @@ resilience4j:
           - java.io.IOException
           - java.util.concurrent.TimeoutException
           - org.springframework.web.client.ResourceAccessException
-
       organizationService:
         register-health-indicator: true
         wait-duration-in-open-state: 20s

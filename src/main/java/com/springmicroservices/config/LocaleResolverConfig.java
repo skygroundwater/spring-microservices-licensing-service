@@ -10,6 +10,7 @@ import java.util.Locale;
 
 @Configuration
 public class LocaleResolverConfig {
+
     @Bean
     public LocaleResolver localeResolver() {
         SessionLocaleResolver localeResolver = new SessionLocaleResolver();

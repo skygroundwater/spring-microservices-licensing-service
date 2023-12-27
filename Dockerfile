@@ -1,4 +1,4 @@
-FROM openjdk:17 as build
+FROM openjdk:11 as build
 
 WORKDIR spring-microservices
 
@@ -6,7 +6,7 @@ COPY target/*.jar application.jar
 
 RUN java -Djarmode=layertools -jar application.jar extract
 
-FROM openjdk:17
+FROM openjdk:11
 
 WORKDIR spring-microservices
 

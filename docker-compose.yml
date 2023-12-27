@@ -5,7 +5,7 @@ services:
       licensing-service
     container_name: licensing-service
     ports:
-      - "8080:8080"
+      - "8020:8020"
     environment:
       PROFILE: "dev"
       CONFIGSERVER_URI: "http://localhost:"
