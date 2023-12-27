@@ -1,6 +1,5 @@
 package com.springmicroservices.events.handler;
 
-import com.springmicroservices.events.CustomChannels;
 import com.springmicroservices.events.model.OrganizationChangeModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

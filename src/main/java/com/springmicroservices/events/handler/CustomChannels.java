@@ -1,4 +1,4 @@
-package com.springmicroservices.events;
+package com.springmicroservices.events.handler;
 
 import org.springframework.cloud.stream.annotation.Input;
 import org.springframework.messaging.SubscribableChannel;
